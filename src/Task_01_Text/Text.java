@@ -7,7 +7,7 @@ import java.util.Arrays;
 Методы: дополнить текст, вывести на консоль текст, заголовок текста.
  */
 public class Text {
-    private Sentence title;
+    private String title;
     private Sentence[] sentence;
 
     public Text() {
@@ -17,7 +17,7 @@ public class Text {
         this.sentence = sentence;
     }
 
-    public Text(Sentence title, Sentence[] sentence) {
+    public Text(String title, Sentence[] sentence) {
         this.title = title;
         this.sentence = sentence;
     }
@@ -30,11 +30,11 @@ public class Text {
         return text.toString().trim();
     }
 
-    public Sentence getTitle() {
+    public String getTitle() {
         return title;
     }
 
-    public void setTitle(Sentence title) {
+    public void setTitle(String title) {
         this.title = title;
     }
 
