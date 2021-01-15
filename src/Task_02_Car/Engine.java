@@ -2,6 +2,7 @@ package Task_02_Car;
 
 /*
 Параметры двигателя: объем (куб. см), тип топлива, расход топлива (л/100км), мощность (л.с.)
+Методы: завести автомобиль (для последующей езды на нем).
  */
 public class Engine {
     private int capacity;
@@ -21,7 +22,7 @@ public class Engine {
     }
 
     public void startEngine() {
-        System.out.println("Завести двигатель.");
+        System.out.println("Завести двигатель. Дыр-дыр-дыр.");
     }
 
     public int getCapacity() {
@@ -66,12 +67,10 @@ public class Engine {
 
     @Override
     public String toString() {
-        return "Двигатель: " +
-                "объем = " + capacity +
+        return "объем = " + capacity +
                 " куб.см., тип топлива = '" + fuel + '\'' +
                 ", расход топлива = " + consumptionFuel +
                 " л/100км, мощность = " + power +
-                "л.с., car = " + car +
-                '}';
+                " л.с.";
     }
 }

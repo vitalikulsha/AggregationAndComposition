@@ -64,6 +64,6 @@ public class Wheel {
 
     @Override
     public String toString() {
-        return "Колесо: " + width + "/" + height + "/" + design + size + " " + type;
+        return width + "/" + height + "/" + design + size + " " + type;
     }
 }
