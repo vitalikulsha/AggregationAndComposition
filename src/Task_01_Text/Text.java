@@ -22,12 +22,26 @@ public class Text {
         this.sentence = sentence;
     }
 
-    public String createText(Sentence[] sentence) {
+    public String createText() {
         StringBuilder text = new StringBuilder();
-        for (int i = 0; i < sentence.length; i++) {
-            text.append(sentence[i].createSentence(sentence[i].getWord(), sentence[i].getSymbolEndSentence()) + " ");
+        for (Sentence sent : sentence) {
+            text.append(sent.createSentence() + " ");
         }
         return text.toString().trim();
+    }
+
+    public void printTitle() {
+        System.out.println("Заголовок текста: " + this.title);
+    }
+
+    public void printText() {
+        System.out.println(createText());
+    }
+
+    public Sentence[] addSentence(Sentence... sentenceAdd) {
+        Sentence[] newText = Arrays.copyOf(this.sentence, this.sentence.length + sentenceAdd.length);
+        System.arraycopy(sentenceAdd, 0, newText, this.sentence.length, sentenceAdd.length);
+        return this.sentence = newText;
     }
 
     public String getTitle() {
