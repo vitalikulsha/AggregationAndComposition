@@ -42,7 +42,7 @@ public class Main {
                 numAcc = Integer.parseInt(reader.readLine());
                 test = false;
             } catch (NumberFormatException e) {
-                System.out.println("Ошибка! Номер счета введен не верно: " + e);
+                System.out.println("Ошибка! Номер счета введен некорректно: " + e);
                 test = true;
             }
         }
