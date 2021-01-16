@@ -67,10 +67,10 @@ public class Engine {
 
     @Override
     public String toString() {
-        return "объем = " + capacity +
-                " куб.см., тип топлива = '" + fuel + '\'' +
-                ", расход топлива = " + consumptionFuel +
-                " л/100км, мощность = " + power +
+        return "\nобъем = " + capacity +
+                " куб.см.\nтип топлива = '" + fuel + '\'' +
+                "\nрасход топлива = " + consumptionFuel +
+                " л/100км\nмощность = " + power +
                 " л.с.";
     }
 }

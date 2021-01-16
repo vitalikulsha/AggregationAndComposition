@@ -113,7 +113,7 @@ public class Car {
                 "\nмарка автомобиля: '" + carBrand + '\'' +
                 "\nмодель: '" + model + '\'' +
                 "\nтип кузова: '" + type + '\'' +
-                "\nдвигатель: " + engine.toString() +
+                "\nДвигатель: " + engine.toString() +
                 "\nколичество колес = " + numberWheels +
                 ": " + sb.substring(0, sb.length() - 2).toString();
     }
