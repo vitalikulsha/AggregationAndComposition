@@ -190,7 +190,7 @@ public class TouristPackageGenerator {
                 }
             }
         }
-        System.out.println("Поиск окончен!");
+        System.out.println("Больше ничего не найдено, поиск окончен!");
     }
 
     //Поиск и сортировка путевки по стране назначения

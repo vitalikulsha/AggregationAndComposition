@@ -21,7 +21,7 @@ public class Main {
         tpGenerator.searchNumberDays(readNumberDays(reader));
         tpGenerator.searchTypeTransportNutritionNumberDays(readType(reader), readTransport(reader),
                 readNutrition(reader), readIntervalNumberDays(reader));
-        tpGenerator.searTypeTransport(readType(reader), readTransport(reader));*/
+        tpGenerator.searTypeTransport(readType(reader), readTransport(reader));
         tpGenerator.dynamicSearch(reader);
         reader.close();
     }
