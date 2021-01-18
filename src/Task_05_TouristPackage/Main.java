@@ -19,6 +19,10 @@ public class Main {
         tpGenerator.searchTransport(readTransport(reader));
         tpGenerator.searchNutrition(readNutrition(reader));
         tpGenerator.searchNumberDays(readNumberDays(reader));
+        tpGenerator.searchTypeTransportNutritionNumberDays(readType(reader), readTransport(reader),
+                readNutrition(reader), readIntervalNumberDays(reader));
+        tpGenerator.searTypeTransport(readType(reader), readTransport(reader));*/
+        tpGenerator.dynamicSearch(reader);
         reader.close();
     }
 
@@ -103,12 +107,31 @@ public class Main {
         return numberDays;
     }
 
+    //ввод количества дней для поиска
+    public static int[] readIntervalNumberDays(BufferedReader reader) throws IOException {
+        int[] numberDays = new int[2];
+        boolean test = true;
+        while (test) {
+            try {
+                System.out.print("Введите интервал дней отдых для подбора списка путевок:\nот ");
+                numberDays[0] = Integer.parseInt(reader.readLine());
+                System.out.print("до ");
+                numberDays[1] = Integer.parseInt(reader.readLine());
+                test = false;
+            } catch (NumberFormatException e) {
+                System.out.println("Ошибка! Количество дней введено некорректно: " + e);
+                test = true;
+            }
+        }
+        return numberDays;
+    }
+
     //список туристических путевок
     private static TouristPackage tp_00 = new TouristPackage("Украина", "Львов", "экскурсия", "автобус", "без питания", 3);
     private static TouristPackage tp_01 = new TouristPackage("Украина", "Львов", "экскурсия", "автобус", "завтрак", 5);
     private static TouristPackage tp_02 = new TouristPackage("Украина", "Хмельницкий", "шопинг", "автобус", "без питания", 3);
     private static TouristPackage tp_03 = new TouristPackage("Украина", "Чернигов", "шопинг", "автобус", "без питания", 2);
-    private static TouristPackage tp_04 = new TouristPackage("Украина", "Буковель", "отдых", "самолет", "всё включено", 11);
+    private static TouristPackage tp_04 = new TouristPackage("Украина", "Буковель", "отдых", "самолет", "все включено", 11);
     private static TouristPackage tp_05 = new TouristPackage("Беларусь", "Нарочь", "лечение", "автобус", "трехразовое", 14);
     private static TouristPackage tp_06 = new TouristPackage("Беларусь", "Гродненская обл.", "экскурсия", "автобус", "без питания", 1);
     private static TouristPackage tp_07 = new TouristPackage("Беларусь", "Витебск", "экскурсия", "поезд", "завтрак", 3);
