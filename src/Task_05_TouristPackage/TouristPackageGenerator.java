@@ -27,7 +27,7 @@ public class TouristPackageGenerator {
             for (TouristPackage tp : touristPackage) {
                 tpSet.append(tp.toString() + ";\n");
             }
-            return "Список туристических путевок:\n" + tpSet.toString();
+            return tpSet.toString();
         } else {
             return "Список туристических путевок пуст.";
         }
@@ -36,37 +36,37 @@ public class TouristPackageGenerator {
     //вывод в консоль списка путевок отсортированных по country
     public void printSortCountry() {
         sortCountry();
-        System.out.println("Туристические путевки упорядочены по стране назначения:\n" + toString());
+        System.out.println("Туристические путевки отсортированы по стране назначения:\n" + toString());
     }
 
     //вывод в консоль списка путевок отсортированных по locality
     public void printSortLocality() {
         sortLocality();
-        System.out.println("Туристические путевки упорядочены по пункту назначения:\n" + toString());
+        System.out.println("Туристические путевки отсортированы по населенному пункту:\n" + toString());
     }
 
     //вывод в консоль списка путевок отсортированных по type
     public void printSortType() {
         sortType();
-        System.out.println("Туристические путевки упорядочены по типу путевки:\n" + toString());
+        System.out.println("Туристические путевки отсортированы по типу путевки:\n" + toString());
     }
 
     //вывод в консоль списка путевок отсортированных по transport
     public void printSortTransport() {
         sortTransport();
-        System.out.println("Туристические путевки упорядочены по виду транспорта:\n" + toString());
+        System.out.println("Туристические путевки отсортированы по виду транспорта:\n" + toString());
     }
 
     //вывод в консоль списка путевок отсортированных по nutrition
     public void printSortNutrition() {
         sortNutrition();
-        System.out.println("Туристические путевки упорядочены по виду питания:\n" + toString());
+        System.out.println("Туристические путевки отсортированы по виду питания:\n" + toString());
     }
 
     //вывод в консоль списка путевок отсортированных по nutrition
     public void printSortNumberDays() {
         sortNumberDays();
-        System.out.println("Туристические путевки упорядочены по количеству дней:\n" + toString());
+        System.out.println("Туристические путевки отсортированы по количеству дней:\n" + toString());
     }
 
     //Сортировка страна->пункт назначения->тип->транспорт->питание->количество дней
@@ -105,196 +105,128 @@ public class TouristPackageGenerator {
         return this.touristPackage;
     }
 
-    //Динамический поиск путевок по порядку: отдых -> трансорт -> питание -> количестов дней (интервал) с выводом на экран
-    public void dynamicSearch(BufferedReader reader) throws IOException {
-        sortCountry();
-        ArrayList<TouristPackage> list = new ArrayList<>();
-        System.out.print("Введите тип путевки: ");
-        String type = reader.readLine();
-        while (true) {
-            if (type.equalsIgnoreCase("отдых") || type.equalsIgnoreCase("экскурсия") ||
-                    type.equalsIgnoreCase("лечение") || type.equalsIgnoreCase("шопинг") ||
-                    type.equalsIgnoreCase("круиз")) {
-                break;
-            } else {
-                System.out.print("Тип путевки введен некорректно. Введите еще раз: ");
-                type = reader.readLine();
-            }
-        }
-        for (TouristPackage tp : touristPackage) {
-            if (type.equalsIgnoreCase(tp.getType())) {
-                System.out.println(tp.toString());
-                list.add(tp);
-            }
-        }
-        if (list.size() != 0) {
-            System.out.print("Введите вид транспорта: ");
-            String transport = reader.readLine();
-            while (true) {
-                if (transport.equalsIgnoreCase("поезд") || transport.equalsIgnoreCase("автобус") ||
-                        transport.equalsIgnoreCase("самолет")) {
-                    break;
-                } else {
-                    System.out.print("Вид транспорта введен некорректно. Введите еще раз: ");
-                    transport = reader.readLine();
-                }
-            }
-            ArrayList<TouristPackage> listTransport = new ArrayList<>();
-            for (TouristPackage tp : list) {
-                if (transport.equalsIgnoreCase(tp.getTransport())) {
-                    listTransport.add(tp);
-                    System.out.println(tp.toString());
-                }
-            }
-            if (listTransport.size() != 0) {
-                System.out.print("Введите вид питания: ");
-                String nutrition = reader.readLine();
-                while (true) {
-                    if (nutrition.equalsIgnoreCase("без питания") || nutrition.equalsIgnoreCase("завтрак") ||
-                            nutrition.equalsIgnoreCase("двухразовое") || nutrition.equalsIgnoreCase("трехразовое") ||
-                            nutrition.equalsIgnoreCase("все включено")) {
-                        break;
-                    } else {
-                        System.out.print("Вид питания введен некорректно. Введите еще раз: ");
-                        nutrition = reader.readLine();
-                    }
-                }
-                ArrayList<TouristPackage> listNutrition = new ArrayList<>();
-                for (TouristPackage tp : listTransport) {
-                    if (nutrition.equalsIgnoreCase(tp.getNutrition())) {
-                        listNutrition.add(tp);
-                        System.out.println(tp.toString());
-                    }
-                }
-                if (listNutrition.size() != 0) {
-                    int beginNumDays = 0;
-                    int endNumDays = 0;
-                    boolean test = true;
-                    while (test) {
-                        try {
-                            System.out.print("Введите интервал дней отдых для подбора списка путевок:\nот ");
-                            beginNumDays = Integer.parseInt(reader.readLine());
-                            System.out.print("до ");
-                            endNumDays = Integer.parseInt(reader.readLine());
-                            test = false;
-                        } catch (NumberFormatException e) {
-                            System.out.println("Ошибка! Количество дней введено некорректно: " + e);
-                            test = true;
-                        }
-                    }
-                    for (TouristPackage tp : listNutrition) {
-                        if (tp.getNumberDays() >= beginNumDays && tp.getNumberDays() <= endNumDays) {
-                            System.out.println(tp.toString());
-                        }
-                    }
-                }
-            }
-        }
-        System.out.println("Больше ничего не найдено, поиск окончен!");
-    }
-
     //Поиск и сортировка путевки по стране назначения
-    public void searchCountry(String countrySearch) {
+    public void searchCountry(String country) {
         sortCountry();
-        System.out.println("Список туристических путевок для страны назначения '" + countrySearch + "':");
+        System.out.println("Список туристических путевок для страны назначения '" + country + "':");
         boolean test = true;
         for (TouristPackage tp : touristPackage) {
-            if (countrySearch.equalsIgnoreCase(tp.getCountry())) {
+            if (country.equalsIgnoreCase(tp.getCountry())) {
                 test = false;
                 System.out.println(tp.toString());
             }
         }
         if (test) {
-            System.out.println("Туристические путевки в страну назначения '" + countrySearch + "' не найдены.");
+            System.out.println("Туристические путевки в страну назначения '" + country + "' не найдены.");
         }
     }
 
     //Поиск и сортировка путевки по пункту назначения
-    public void searchLocality(String localitySearch) {
+    public void searchLocality(String locality) {
         sortLocality();
-        System.out.println("Список туристических путевок для пункта назначения '" + localitySearch + "':");
+        System.out.println("Список туристических путевок для населенного пункта '" + locality + "':");
         boolean test = true;
         for (TouristPackage tp : touristPackage) {
-            if (localitySearch.equalsIgnoreCase(tp.getLocality())) {
+            if (locality.equalsIgnoreCase(tp.getLocality())) {
                 test = false;
                 System.out.println(tp.toString());
             }
         }
         if (test) {
-            System.out.println("Туристические путевки в пункт назначения '" + localitySearch + "' не найдены.");
+            System.out.println("Туристические путевки в населенный пункт '" + locality + "' не найдены.");
         }
     }
 
     //Поиск и сортировка путевки по типу путевки
-    public void searchType(String typeSearch) {
+    public ArrayList<TouristPackage> searchType(String type) {
         sortType();
-        System.out.println("Список туристических путевок для типа '" + typeSearch + "':");
-        boolean test = true;
+        System.out.println("Список туристических путевок для типа '" + type + "':");
+        ArrayList<TouristPackage> listType = new ArrayList<>();
         for (TouristPackage tp : touristPackage) {
-            if (typeSearch.equalsIgnoreCase(tp.getType())) {
-                test = false;
+            if (type.equalsIgnoreCase(tp.getType())) {
+                listType.add(tp);
                 System.out.println(tp.toString());
             }
         }
-        if (test) {
-            System.out.println("Туристические путевки типа '" + typeSearch + "' не найдены.");
+        if (listType.size() == 0) {
+            System.out.println("Туристические путевки типа '" + type + "' не найдены.");
         }
+        return listType;
     }
 
     //Поиск и сортировка путевки по виду транспорта
-    public void searchTransport(String transportSearch) {
+    public ArrayList<TouristPackage> searchTransport(String transport) {
         sortTransport();
-        System.out.println("Список туристических путевок для вида транспорта '" + transportSearch + "':");
-        boolean test = true;
+        System.out.println("Список туристических путевок для вида транспорта '" + transport + "':");
+        ArrayList<TouristPackage> listTransport = new ArrayList<>();
         for (TouristPackage tp : touristPackage) {
-            if (transportSearch.equalsIgnoreCase(tp.getTransport())) {
-                test = false;
+            if (transport.equalsIgnoreCase(tp.getTransport())) {
                 System.out.println(tp.toString());
+                listTransport.add(tp);
             }
         }
-        if (test) {
-            System.out.println("Туристические путевки для вида транспорта '" + transportSearch + "' не найдены.");
+        if (listTransport.size() == 0) {
+            System.out.println("Туристические путевки для вида транспорта '" + transport + "' не найдены.");
         }
+        return listTransport;
     }
 
     //Поиск и сортировка путевки по наличию питания
-    public void searchNutrition(String nutritionSearch) {
+    public ArrayList<TouristPackage> searchNutrition(String nutrition) {
         sortNutrition();
-        System.out.println("Список туристических путевок по виду питания '" + nutritionSearch + "':");
-        boolean test = true;
+        System.out.println("Список туристических путевок по виду питания '" + nutrition + "':");
+        ArrayList<TouristPackage> listNutrition = new ArrayList<>();
         for (TouristPackage tp : touristPackage) {
-            if (nutritionSearch.equalsIgnoreCase(tp.getNutrition())) {
-                test = false;
+            if (nutrition.equalsIgnoreCase(tp.getNutrition())) {
                 System.out.println(tp.toString());
+                listNutrition.add(tp);
             }
         }
-        if (test) {
-            System.out.println("Туристические путевки по виду питания '" + nutritionSearch + "' не найдены.");
+        if (listNutrition.size() == 0) {
+            System.out.println("Туристические путевки по виду питания '" + nutrition + "' не найдены.");
         }
+        return listNutrition;
     }
 
     //Поиск и сортировка путевки по количеству дней
-    public void searchNumberDays(int numberDaysSearch) {
+    public void searchNumberDays(int numberDays) {
         sortNumberDays();
-        System.out.println("Список туристических путевок на '" + numberDaysSearch + "' дней отдыха:");
+        System.out.println("Список туристических путевок на '" + numberDays + "' дней отдыха:");
         boolean test = true;
         for (TouristPackage tp : touristPackage) {
-            if (numberDaysSearch == tp.getNumberDays()) {
+            if (numberDays == tp.getNumberDays()) {
                 test = false;
                 System.out.println(tp.toString());
             }
         }
         if (test) {
-            System.out.println("Туристические путевки на '" + numberDaysSearch + "' дней отдыха не найдены.");
+            System.out.println("Туристические путевки на '" + numberDays + "' дней отдыха не найдены.");
         }
+    }
+
+    public ArrayList<TouristPackage> searchNumberDaysInterval(int[] numberDays) {
+        sortNumberDays();
+        System.out.println("Список туристических путевок на [" + numberDays[0] + "-" + numberDays[1] + "] дней отдыха:");
+        //boolean test = true;
+        ArrayList<TouristPackage> listNumberDays = new ArrayList<>();
+        for (TouristPackage tp : touristPackage) {
+            if (tp.getNumberDays() >= numberDays[0] && tp.getNumberDays() <= numberDays[1]) {
+                //test = false;
+                System.out.println(tp.toString());
+                listNumberDays.add(tp);
+            }
+        }
+        if (listNumberDays.size() == 0) {
+            System.out.println("Туристические путевки на [" + numberDays[0] + "-" + numberDays[1] + "] дней отдыха не найдены.");
+        }
+        return listNumberDays;
     }
 
     //Поиск путевки по типу, транспорту, наличию питания и количеству деней (интервал)
     public void searchTypeTransportNutritionNumberDays(String type, String transport, String nutrition, int[] numberDays) {
         sortCountry();
         System.out.println("Список туристических путевок по следующим параметрам - тип '" + type + "', транспорт '" +
-                transport + "', вид питания '" + nutrition + "', количество дней [" + numberDays[0] +
-                " - " + numberDays[1] + "]:");
+                transport + "', питание '" + nutrition + "', количество дней [" + numberDays[0] + "-" + numberDays[1] + "]:");
         boolean test = true;
         for (TouristPackage tp : touristPackage) {
             if (type.equalsIgnoreCase(tp.getType()) && transport.equalsIgnoreCase(tp.getTransport()) &&
@@ -333,6 +265,4 @@ public class TouristPackageGenerator {
     public void setTouristPackage(TouristPackage... touristPackage) {
         this.touristPackage = touristPackage;
     }
-
-
 }
