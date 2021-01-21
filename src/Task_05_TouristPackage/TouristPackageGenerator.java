@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 
 /* Task 05
 5. Туристические путевки. Сформировать набор предложений клиенту по выбору туристической путевки
@@ -71,37 +72,55 @@ public class TouristPackageGenerator {
 
     //Сортировка страна->пункт назначения->тип->транспорт->питание->количество дней
     public TouristPackage[] sortCountry() {
-        Arrays.sort(this.touristPackage, ComparatorTouristPackage.SortCountry);
+        Comparator<TouristPackage> tpComparator = new CountryComparator().thenComparing(new LocalityComparator().
+                thenComparing(new TypeComparator().thenComparing(new TransportComparator().
+                        thenComparing(new NutritionComparator().thenComparing(new NumberDaysComparator())))));
+        Arrays.sort(this.touristPackage, tpComparator);
         return this.touristPackage;
     }
 
     //Сортировка: пункт назначения->страна->тип->транспорт->питание->количество дней
     public TouristPackage[] sortLocality() {
-        Arrays.sort(this.touristPackage, ComparatorTouristPackage.SortLocality);
+        Comparator<TouristPackage> tpComparator = new LocalityComparator().thenComparing(new CountryComparator().
+                thenComparing(new TypeComparator().thenComparing(new TransportComparator().
+                        thenComparing(new NutritionComparator().thenComparing(new NumberDaysComparator())))));
+        Arrays.sort(this.touristPackage, tpComparator);
         return this.touristPackage;
     }
 
     //Сортировка: тип->страна->пункт назначения->транспорт->питание->количество дней
     public TouristPackage[] sortType() {
-        Arrays.sort(this.touristPackage, ComparatorTouristPackage.SortType);
+        Comparator<TouristPackage> tpComparator = new TypeComparator().thenComparing(new CountryComparator().
+                thenComparing(new LocalityComparator().thenComparing(new TransportComparator().
+                        thenComparing(new NutritionComparator().thenComparing(new NumberDaysComparator())))));
+        Arrays.sort(this.touristPackage, tpComparator);
         return this.touristPackage;
     }
 
     //Сортировка транспорт->страна->пункт назначения->тип->питание->количество дней
     public TouristPackage[] sortTransport() {
-        Arrays.sort(this.touristPackage, ComparatorTouristPackage.SortTransport);
+        Comparator<TouristPackage> tpComparator = new TransportComparator().thenComparing(new CountryComparator().
+                thenComparing(new LocalityComparator().thenComparing(new TypeComparator().
+                        thenComparing(new NutritionComparator().thenComparing(new NumberDaysComparator())))));
+        Arrays.sort(this.touristPackage, tpComparator);
         return this.touristPackage;
     }
 
     //Сортировка питание->страна->пункт назначения->тип->транспорт->количество дней
     public TouristPackage[] sortNutrition() {
-        Arrays.sort(this.touristPackage, ComparatorTouristPackage.SortNutrition);
+        Comparator<TouristPackage> tpComparator = new NutritionComparator().thenComparing(new CountryComparator().
+                thenComparing(new LocalityComparator().thenComparing(new TypeComparator().
+                        thenComparing(new TransportComparator().thenComparing(new NumberDaysComparator())))));
+        Arrays.sort(this.touristPackage, tpComparator);
         return this.touristPackage;
     }
 
     //Сортировка количество дней->страна->пункт назначения->тип->транспорт->питание
     public TouristPackage[] sortNumberDays() {
-        Arrays.sort(this.touristPackage, ComparatorTouristPackage.SortNumberDays);
+        Comparator<TouristPackage> tpComparator = new NumberDaysComparator().thenComparing(new CountryComparator().
+                thenComparing(new LocalityComparator().thenComparing(new TypeComparator().
+                        thenComparing(new TransportComparator().thenComparing(new NutritionComparator())))));
+        Arrays.sort(this.touristPackage, tpComparator);
         return this.touristPackage;
     }
 
