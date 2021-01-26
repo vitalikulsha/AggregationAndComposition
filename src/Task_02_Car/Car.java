@@ -9,20 +9,24 @@ public class Car {
     private String model;
     private String type;
     private Engine engine;
+    private int productionYear;
+    private int volumeTank;
+    private int fuelLevel;
     private Wheel[] wheel;
-    private int numberWheels;
 
     public Car() {
-        this.engine = new Engine();
     }
 
-    public Car(String carBrand, String model, String type, Wheel[] wheel) {
+    public Car(String carBrand, String model, String type, Engine engine, int productionYear, int volumeTank,
+               int fuelLevel, Wheel[] wheel) {
         this.carBrand = carBrand;
         this.model = model;
         this.type = type;
-        this.engine = new Engine();
+        this.engine = engine;
+        this.productionYear = productionYear;
+        this.volumeTank = volumeTank;
+        this.fuelLevel = fuelLevel;
         this.wheel = wheel;
-        this.numberWheels = wheel.length;
     }
 
     //ехать
@@ -32,8 +36,20 @@ public class Car {
     }
 
     //заправить автомобиль
-    public void refuelCar() {
-        System.out.println("Заправить автомобиль топливом - " + this.engine.getFuel() + ". Буль-буль-буль.");
+    public void refuelCar(int amountFuel) {
+        if (fuelLevel == volumeTank) {
+            System.out.println("Топливный бак полный, заправка не требуется.");
+        } else if (amountFuel <= (volumeTank - fuelLevel)) {
+            System.out.println("Заправить " + amountFuel + " л. '" + this.engine.getFuel() + "'. Буль-буль-буль");
+            this.fuelLevel = fuelLevel + amountFuel;
+        } else if (amountFuel > (volumeTank - fuelLevel) && (volumeTank - fuelLevel) > 0) {
+            System.out.println("Заправить " + (volumeTank - fuelLevel) + " л. '" + this.engine.getFuel() +
+                    "' до полного бака, остаток " + (amountFuel - (volumeTank - fuelLevel)) +
+                    " л. залить в канистру. Буль-буль-буль");
+            this.fuelLevel = volumeTank;
+        } else {
+            System.out.println("Бак переполнен - датчик уровня топлива неисправен.");
+        }
     }
 
     //вывести в консоль марку автомобиля
@@ -42,15 +58,15 @@ public class Car {
     }
 
     //Заменить колесо
-    public Wheel[] replacementWheel(Wheel newWheel, int numberWheel) {
-        if (numberWheel <= this.wheel.length) {
-            System.out.println("Заменить колесо №" + numberWheel + " - \"" + this.wheel[numberWheel - 1].toString() +
+    public Wheel[] replaceWheel(Wheel newWheel, int wheelNumber) {
+        if (wheelNumber <= this.wheel.length) {
+            System.out.println("Заменить колесо №" + wheelNumber + " - \"" + this.wheel[wheelNumber - 1].toString() +
                     "\" на колесо \"" + newWheel.toString() + '\"');
             for (int i = 0; i < this.wheel.length; i++) {
-                this.wheel[numberWheel - 1] = newWheel;
+                this.wheel[wheelNumber - 1] = newWheel;
             }
         } else {
-            System.out.println("Колесо с номером " + numberWheel + " не существует, невозможно произвести замену.");
+            System.out.println("Колесо с номером " + wheelNumber + " не существует, невозможно произвести замену.");
         }
         return this.wheel;
     }
@@ -87,14 +103,6 @@ public class Car {
         this.engine = engine;
     }
 
-    public int getNumberWheels() {
-        return numberWheels;
-    }
-
-    public void setNumberWheels(int numberWheels) {
-        this.numberWheels = numberWheels;
-    }
-
     public Wheel[] getWheel() {
         return wheel;
     }
@@ -113,8 +121,11 @@ public class Car {
                 "\nмарка автомобиля: '" + carBrand + '\'' +
                 "\nмодель: '" + model + '\'' +
                 "\nтип кузова: '" + type + '\'' +
+                "\nгод выпуска: " + productionYear + " г.в." +
+                "\nобъем топливного бака: " + volumeTank + " л." +
+                "\nуровень топлива в баке: " + fuelLevel + " л." +
                 "\nДвигатель: " + engine.toString() +
-                "\nколичество колес = " + numberWheels +
+                "\nколичество колес = " + wheel.length +
                 ": " + sb.substring(0, sb.length() - 2).toString();
     }
 }

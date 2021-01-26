@@ -7,28 +7,26 @@ package Task_02_Car;
 
 public class Main {
     public static void main(String[] args) {
-        Wheel[] wheelKit = new Wheel[4];
-        for (int i = 0; i < wheelKit.length; i++) {
-            wheelKit[i] = new Wheel(255, 55, 'R', 17, "winter");
-        }
-        Car car = new Car("Renault", "Vel Satis", "hatchback", wheelKit);
-        //объект класса Engine (пустой) создается в классе Car (композиция)
-        // заполняем поля объекта класса Engine
-        car.getEngine().setCar(car);
-        car.getEngine().setCapacity(2200);
-        car.getEngine().setFuel("ДТ");
-        car.getEngine().setConsumptionFuel(9.1);
-        car.getEngine().setPower(150);
+        Car car = new Car("Renault", "Vel Satis", "hatchback", engine, 2002, 85, 60, wheels);
         car.printTitle();
         car.driveCar();
-        car.refuelCar();
-        Wheel newWheel = new Wheel(265, 45, 'R', 17, "winter");
-        car.replacementWheel(newWheel, 2);
-        //Проверка замены колеса
+        car.refuelCar(10);
+        car.replaceWheel(newWheel, 2);
+        //Вывод в консоль описание автомобиля для проверки замены колеса и измененния уровня топлива (заправки авто)
         System.out.println('\n' + car.toString());
-        //вывод автомобиля, на который установлен двигатель car (проверка композиции)
-        System.out.println("Двигатель: " + car.getEngine().toString() + "\nустановлен на:\n" +
-                car.getEngine().getCar().toString());
     }
+
+    private static Wheel[] createArrWheels(Wheel wheel) {
+        Wheel[] wheelsArr = new Wheel[4];
+        for (int i = 0; i < wheelsArr.length; i++) {
+            wheelsArr[i] = wheel;
+        }
+        return wheelsArr;
+    }
+
+    private static Wheel[] wheels = createArrWheels(new Wheel(255, 55, 'R', 17, "winter"));
+    private static Engine engine = new Engine(2200, "ДТ", 9.1, 150);
+    private static Wheel newWheel = new Wheel(265, 45, 'R', 17, "winter");
+
 }
 

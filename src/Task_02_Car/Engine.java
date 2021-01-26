@@ -9,7 +9,6 @@ public class Engine {
     private String fuel;
     private double consumptionFuel;
     private int power;
-    private Car car;
 
     public Engine() {
     }
@@ -57,20 +56,12 @@ public class Engine {
         this.power = power;
     }
 
-    public Car getCar() {
-        return car;
-    }
-
-    public void setCar(Car car) {
-        this.car = car;
-    }
-
     @Override
     public String toString() {
         return "\nобъем = " + capacity +
                 " куб.см.\nтип топлива = '" + fuel + '\'' +
                 "\nрасход топлива = " + consumptionFuel +
-                " л/100км\nмощность = " + power +
+                "л/100км\nмощность = " + power +
                 " л.с.";
     }
 }
