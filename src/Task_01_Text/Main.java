@@ -7,35 +7,30 @@ package Task_01_Text;
 
 public class Main {
     public static void main(String[] args) {
-        Word word_01 = new Word("Сказка");
-        Word word_02 = new Word("про");
-        Word word_03 = new Word("репку");
-        Word word_04 = new Word("Посадил");
-        Word word_05 = new Word("дед");
-
-        Sentence[] sentenceList = new Sentence[2];
-        sentenceList[0] = new Sentence('!', word_01, word_02, word_03);
-        sentenceList[1] = new Sentence('.', word_04, word_05, word_03);
-
-        Text text = new Text("Репка.", sentenceList);
-
-        Word wordAdd_01 = new Word("Вот");
-        Word wordAdd_02 = new Word("и");
-        Word wordAdd_03 = new Word("сказке");
-        Word wordAdd_04 = new Word("конец");
-        Word wordAdd_05 = new Word("А");
-        Word wordAdd_06 = new Word("кто");
-        Word wordAdd_07 = new Word("слушал");
-        Word wordAdd_08 = new Word("молодец");
-        Sentence[] sentenceAdd = new Sentence[2];
-        sentenceAdd[0] = new Sentence('.', wordAdd_01, wordAdd_02, wordAdd_03, wordAdd_04);
-        sentenceAdd[1] = new Sentence('!', wordAdd_05, wordAdd_06, wordAdd_07, wordAdd_08);
-
+        Text text = new Text("Репка.", sentencesList);
         text.printTitle();
         System.out.println("\nИсходный текст: ");
         text.printText();
         System.out.println("\nИзмененный текст: ");
-        text.addSentence(sentenceAdd);
+        text.completeText(sentencesAdd);
         text.printText();
     }
+
+    private static Word[] createArrWords(String str) {
+        String[] strArr = str.split(" ");
+        Word[] words = new Word[strArr.length];
+        for (int i = 0; i < strArr.length; i++) {
+            words[i] = new Word(strArr[i]);
+        }
+        return words;
+    }
+
+    private static Word[] words_01 = createArrWords("Сказка про репку");
+    private static Word[] words_02 = createArrWords("Посадил дед репку");
+    private static Word[] wordsAdd_01 = createArrWords("Вот и сказке конец");
+    private static Word[] wordsAdd_02 = createArrWords("А кто слушал молодец");
+    private static Sentence[] sentencesList = new Sentence[]{new Sentence('!', words_01),
+            new Sentence('.', words_02)};
+    private static Sentence[] sentencesAdd = new Sentence[]{new Sentence('.', wordsAdd_01),
+            new Sentence('!', wordsAdd_02)};
 }

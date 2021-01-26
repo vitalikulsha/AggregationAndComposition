@@ -1,45 +1,45 @@
 package Task_01_Text;
 
 public class Sentence {
-    private Word[] word;
-    private char symbolEndSentence;
+    private Word[] words;
+    private char sentenceEndSymbol;
 
-    public Sentence(char symbolEndSentence, Word... word) {
-        this.word = word;
-        this.symbolEndSentence = symbolEndSentence;
-        StringBuilder sb = new StringBuilder();
+    public Sentence(char sentenceEndSymbol, Word... words) {
+        this.words = words;
+        this.sentenceEndSymbol = sentenceEndSymbol;
     }
 
-    public String createSentence() {
+    //конвертация набора слов в предложение (строку)
+    public String convertWords() {
         StringBuilder sb = new StringBuilder();
-        for (Word str : word) {
+        for (Word str : words) {
             sb.append(str.getWord() + " ");
         }
-        return sb.toString().trim() + symbolEndSentence;
+        return sb.toString().trim() + sentenceEndSymbol;
     }
 
-    public Word[] getWord() {
-        return word;
+    public Word[] getWords() {
+        return words;
     }
 
-    public void setWord(Word[] word) {
-        this.word = word;
+    public void setWords(Word[] words) {
+        this.words = words;
     }
 
-    public char getSymbolEndSentence() {
-        return symbolEndSentence;
+    public char getSentenceEndSymbol() {
+        return sentenceEndSymbol;
     }
 
-    public void setSymbolEndSentence(char symbolEndSentence) {
-        this.symbolEndSentence = symbolEndSentence;
+    public void setSentenceEndSymbol(char sentenceEndSymbol) {
+        this.sentenceEndSymbol = sentenceEndSymbol;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for (Word w : this.word) {
+        for (Word w : this.words) {
             sb.append(w.getWord() + " ");
         }
-        return sb.toString().trim() + this.symbolEndSentence;
+        return sb.toString().trim() + this.sentenceEndSymbol;
     }
 }

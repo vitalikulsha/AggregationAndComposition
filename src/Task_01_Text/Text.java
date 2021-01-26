@@ -8,40 +8,39 @@ import java.util.Arrays;
  */
 public class Text {
     private String title;
-    private Sentence[] sentence;
+    private Sentence[] sentences;
 
     public Text() {
     }
 
-    public Text(Sentence[] sentence) {
-        this.sentence = sentence;
+    public Text(Sentence[] sentences) {
+        this.sentences = sentences;
     }
 
-    public Text(String title, Sentence[] sentence) {
+    public Text(String title, Sentence[] sentences) {
         this.title = title;
-        this.sentence = sentence;
+        this.sentences = sentences;
     }
 
-    public String createText() {
+    //вывод в консоль текста
+    public void printText() {
         StringBuilder text = new StringBuilder();
-        for (Sentence sent : sentence) {
-            text.append(sent.createSentence() + " ");
+        for (Sentence sent : sentences) {
+            text.append(sent.convertWords() + " ");
         }
-        return text.toString().trim();
+        System.out.println(text.toString().trim());
     }
 
+    //вывод в консоль заголовка
     public void printTitle() {
         System.out.println("Заголовок текста: " + this.title);
     }
 
-    public void printText() {
-        System.out.println(createText());
-    }
-
-    public Sentence[] addSentence(Sentence... sentenceAdd) {
-        Sentence[] newText = Arrays.copyOf(this.sentence, this.sentence.length + sentenceAdd.length);
-        System.arraycopy(sentenceAdd, 0, newText, this.sentence.length, sentenceAdd.length);
-        return this.sentence = newText;
+    //дополнение текста новыми предложениями
+    public Sentence[] completeText(Sentence... sentenceAdd) {
+        Sentence[] newText = Arrays.copyOf(this.sentences, this.sentences.length + sentenceAdd.length);
+        System.arraycopy(sentenceAdd, 0, newText, this.sentences.length, sentenceAdd.length);
+        return this.sentences = newText;
     }
 
     public String getTitle() {
@@ -52,12 +51,12 @@ public class Text {
         this.title = title;
     }
 
-    public Sentence[] getSentence() {
-        return sentence;
+    public Sentence[] getSentences() {
+        return sentences;
     }
 
-    public void setSentence(Sentence[] sentence) {
-        this.sentence = sentence;
+    public void setSentences(Sentence[] sentences) {
+        this.sentences = sentences;
     }
 
 }
