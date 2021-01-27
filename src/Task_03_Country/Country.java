@@ -1,37 +1,32 @@
 package Task_03_Country;
 
-import java.util.Arrays;
-
 /*
-Параметры: название, столица, области.
+Параметры: название, список областей.
 Методы: вычисление площади, вычисление населения, вывод в консоль: столицы,
 количества областей, площади, областные центры
  */
 public class Country {
     private String name;
-    private City capital;
-    private Region[] region;
+    private Region[] regions;
 
-    public Country() {
-    }
-
-    public Country(String name, City capital, Region... region) {
+    public Country(String name, Region... regions) {
         this.name = name;
-        this.capital = capital;
-        this.region = region;
+        this.regions = regions;
     }
 
+    //вычисление площади государства
     public double areaCountry() {
         double area = 0;
-        for (Region reg : region) {
+        for (Region reg : regions) {
             area += reg.areaRegion();
         }
         return area;
     }
 
+    //вычисление количества населения
     public int numberPopulationCountry() {
         int numPopulation = 0;
-        for (Region reg : region) {
+        for (Region reg : regions) {
             numPopulation += reg.numberPopulationRegion();
         }
         return numPopulation;
@@ -39,32 +34,41 @@ public class Country {
 
     //вывод в консоль столицу государства
     public void printCapital() {
-        System.out.println("Столица '" + name + "' - город " + capital.getName() + '.');
+        City capital = null;
+        for (Region reg : regions) {
+            for (District distr : reg.getDistricts()) {
+                if (distr.getCity().getIsCapital()) {
+                    capital = distr.getCity();
+                    break;
+                }
+            }
+        }
+        System.out.println("Столица государства " + name + " - город " + capital.getName() + '.');
     }
 
     //вывод в консоль количества областей государства
     public void printNumberRegions() {
-        System.out.println("Количество областей в '" + name + "' - " + region.length + '.');
+        System.out.println("Количество областей в государстве " + name + " - " + regions.length + '.');
     }
 
     //вывод в консоль площади государства
     public void printAreaCountry() {
-        System.out.println("Площадь '" + name + "' - " + areaCountry() + " кв.км.");
+        System.out.printf("Площадь государства " + name + " - %.2f кв.км.\n", areaCountry());
     }
 
     //вывод в консоль название областных центров
     public void printRegionCenter() {
-        System.out.println("Областные центры '" + name + "':");
-        for (Region reg : region) {
-            System.out.println(reg.getCityCenter().getName());
+        StringBuilder sb = new StringBuilder();
+        for (Region reg : regions) {
+            for (District distr : reg.getDistricts()) {
+                if (distr.getCity().getIsRegionalCenter()) {
+                    sb.append(distr.getCity().getName() + ", ");
+                    break;
+                }
+            }
         }
-    }
-
-    //Добавление новой области
-    public Region[] addRegion(Region... regionAdd) {
-        Region[] regionTemp = Arrays.copyOf(this.region, this.region.length + regionAdd.length);
-        System.arraycopy(regionAdd, 0, regionTemp, this.region.length, regionAdd.length);
-        return this.region = regionTemp;
+        System.out.println("Областные центры государства " + name + ": " +
+                sb.substring(0, sb.length() - 2).toString() + '.');
     }
 
     public String getName() {
@@ -75,27 +79,11 @@ public class Country {
         this.name = name;
     }
 
-    public City getCapital() {
-        return capital;
+    public Region[] getRegions() {
+        return regions;
     }
 
-    public void setCapital(City capital) {
-        this.capital = capital;
-    }
-
-    public Region[] getRegion() {
-        return region;
-    }
-
-    public void setRegion(Region... region) {
-        this.region = region;
-    }
-
-    @Override
-    public String toString() {
-        return '\'' + name + '\'' +
-                ": столица - " + capital.getName() +
-                ", площадь - " + areaCountry() +
-                " кв. км., население - " + numberPopulationCountry() + " чел.";
+    public void setRegions(Region... regions) {
+        this.regions = regions;
     }
 }

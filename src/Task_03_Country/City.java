@@ -1,28 +1,21 @@
 package Task_03_Country;
 
 /*
-Параметры класса: название, площадь, население
+Параметры класса: название, площадь, население, столица, областной центр
  */
 public class City {
     private String name;
     private double areaCity;
     private int populationCity;
-    private District district;
+    private boolean isRegionalCenter;
+    private boolean isCapital;
 
-    public City() {
-    }
-
-    public City(String name, double areaCity, int populationCity) {
+    public City(String name, double areaCity, int populationCity, boolean isRegionalCenter, boolean isCapital) {
         this.name = name;
         this.areaCity = areaCity;
         this.populationCity = populationCity;
-    }
-
-    public City(String name, double areaCity, int populationCity, District district) {
-        this.name = name;
-        this.areaCity = areaCity;
-        this.populationCity = populationCity;
-        this.district = district;
+        this.isRegionalCenter = isRegionalCenter;
+        this.isCapital = isCapital;
     }
 
     public String getName() {
@@ -49,20 +42,26 @@ public class City {
         this.populationCity = populationCity;
     }
 
-    public District getDistrict() {
-        return district;
+    public boolean getIsRegionalCenter() {
+        return isRegionalCenter;
     }
 
-    public void setDistrict(District district) {
-        this.district = district;
+    public void setRegionalCenter(boolean regionalCenter) {
+        isRegionalCenter = regionalCenter;
     }
 
+    public boolean getIsCapital() {
+        return isCapital;
+    }
+
+    public void setCapital(boolean capital) {
+        isCapital = capital;
+    }
 
     @Override
     public String toString() {
         return '\'' + name + '\'' +
                 ": площадь - " + areaCity + " кв. км." +
-                ", население - " + populationCity + " чел." +
-                ", '" + district.getName() + '\'';
+                ", население - " + populationCity + " чел.";
     }
 }

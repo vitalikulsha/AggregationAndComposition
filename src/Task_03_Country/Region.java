@@ -1,38 +1,23 @@
 package Task_03_Country;
 
 /*
-Параметры: название, областной центр, районы
+Параметры: название, список районов
 Методы: вычисление площади, вычисление населения
  */
 
-import java.util.Arrays;
-
 public class Region {
     private String name;
-    private City cityCenter;
-    private District[] district;
-    private Country country;
+    private District[] districts;
 
-    public Region() {
-    }
-
-    public Region(String name, City cityCenter, District... district) {
+    public Region(String name, District... districts) {
         this.name = name;
-        this.cityCenter = cityCenter;
-        this.district = district;
-    }
-
-    public Region(String name, City cityCenter, Country country, District... district) {
-        this.name = name;
-        this.cityCenter = cityCenter;
-        this.country = country;
-        this.district = district;
+        this.districts = districts;
     }
 
     //вычисление площади области
     public double areaRegion() {
         double area = 0;
-        for (District distr : district) {
+        for (District distr : districts) {
             area += distr.getArea();
         }
         return area;
@@ -41,17 +26,10 @@ public class Region {
     //вычисление количества населения
     public int numberPopulationRegion() {
         int numPopulation = 0;
-        for (District distr : district) {
+        for (District distr : districts) {
             numPopulation += distr.getPopulation();
         }
         return numPopulation;
-    }
-
-    //Добавление нового района
-    public District[] addDistrict(District... districtAdd) {
-        District[] districtTemp = Arrays.copyOf(this.district, this.district.length + districtAdd.length);
-        System.arraycopy(districtAdd, 0, districtTemp, this.district.length, districtAdd.length);
-        return this.district = districtTemp;
     }
 
     public String getName() {
@@ -62,35 +40,18 @@ public class Region {
         this.name = name;
     }
 
-    public City getCityCenter() {
-        return cityCenter;
+    public District[] getDistricts() {
+        return districts;
     }
 
-    public void setCityCenter(City cityCenter) {
-        this.cityCenter = cityCenter;
-    }
-
-    public District[] getDistrict() {
-        return district;
-    }
-
-    public void setDistrict(District... district) {
-        this.district = district;
-    }
-
-    public Country getCountry() {
-        return country;
-    }
-
-    public void setCountry(Country country) {
-        this.country = country;
+    public void setDistricts(District... districts) {
+        this.districts = districts;
     }
 
     @Override
     public String toString() {
         return '\'' + name + '\'' +
-                ": областной центр  - '" + cityCenter.getName() +
-                "', площадь - " + areaRegion() +
+                ": площадь - " + areaRegion() +
                 " кв. км., наcеление - " + numberPopulationRegion() + " чел.";
     }
 }
