@@ -7,90 +7,20 @@ package Task_04_Account;
 
  */
 
-import java.util.Arrays;
-
 public class Client {
     private long id;
     private String name;
-    private Account[] account;
-
-    public Client() {
-    }
+    private Account[] accounts;
 
     public Client(long id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public Client(long id, String name, Account... account) {
+    public Client(long id, String name, Account... accounts) {
         this.id = id;
         this.name = name;
-        this.account = account;
-    }
-
-    //сортировка счетов по возрастания номеров
-    public Account[] sortAccountNumber() {
-        Arrays.sort(this.account, ComparatorAccount.NumberAccountComparator);
-        return this.account;
-    }
-
-    //сортировка по балансу на счете
-    public Account[] sortAccountBalance() {
-        Arrays.sort(this.account, ComparatorAccount.BalanceAccountComparator);
-        return this.account;
-    }
-
-    //поиск счета по номеру
-    public void searchAccount(int num) {
-        boolean test = true;
-        for (Account acc : account) {
-            if (num == acc.getNumber()) {
-                test = false;
-                System.out.println(acc.toString());
-                break;
-            }
-        }
-        if (test) {
-            System.out.println("Счёт с номером " + num + " не найден.");
-        }
-    }
-
-    //вычисление общей суммы по счетам
-    public int sumMoney() {
-        int sum = 0;
-        for (Account acc : account) {
-            sum += acc.getBalance();
-        }
-        return sum;
-    }
-
-    //вычисление суммы по всем счетам, имеющим положительный балансы.
-    public int sumMoneyPositive() {
-        int sum = 0;
-        for (Account acc : account) {
-            if (acc.getStatus()) {
-                sum += acc.getBalance();
-            }
-        }
-        return sum;
-    }
-
-    //вычисление суммы по всем счетам, имеющим отрицательные балансы.
-    public int sumMoneyNegative() {
-        int sum = 0;
-        for (Account acc : account) {
-            if (!acc.getStatus()) {
-                sum += acc.getBalance();
-            }
-        }
-        return sum;
-    }
-
-    //вывод в консоль массива счетов
-    public void printAccount() {
-        for (Account acc : account) {
-            System.out.println(acc.toString());
-        }
+        this.accounts = accounts;
     }
 
     public long getId() {
@@ -109,18 +39,18 @@ public class Client {
         this.name = name;
     }
 
-    public Account[] getAccount() {
-        return account;
+    public Account[] getAccounts() {
+        return accounts;
     }
 
-    public void setAccount(Account... account) {
-        this.account = account;
+    public void setAccounts(Account... accounts) {
+        this.accounts = accounts;
     }
 
     @Override
     public String toString() {
         StringBuilder numAcc = new StringBuilder();
-        for (Account acc : account) {
+        for (Account acc : accounts) {
             numAcc.append("#" + acc.getNumber() + ", ");
         }
         return "Клиент: " +

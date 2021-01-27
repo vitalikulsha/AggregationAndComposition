@@ -2,29 +2,36 @@ package Task_04_Account;
 
 /*
 Поля класса: номер счета (number), сумма на счете (balance),
-состояние счета (status): если сумма на счете отрицательная, то счет заблокирован (false),
+состояние счета (isUnblocked): если сумма на счете отрицательная, то счет заблокирован (false),
 если положительная - разблокирован (true)
+Метод, который будет снимать деньги withdraw и там проверять баланс и обновлять  isBlocked
  */
 public class Account {
     private int number;
     private int balance;
-    private boolean status;
-    private Client client;
-
-    public Account() {
-    }
+    private boolean isUnblocked;
 
     public Account(int number, int balance) {
         this.number = number;
         this.balance = balance;
-        this.status = balance < 0 ? true : false;
+        this.isUnblocked = balance > 0 ? true : false;
     }
 
-    public Account(int number, int balance, Client client) {
-        this.number = number;
-        this.balance = balance;
-        this.client = client;
-        this.status = balance < 0 ? true : false;
+    //снятие денег со счета, обновление баланса и статуса счета
+    public void withdraw(int amountMoney) {
+        if (isUnblocked) {
+            int newBalance = this.balance - amountMoney;
+            System.out.println("Было снято " + amountMoney + " у.е. Остаток - " + newBalance + " у.е.");
+            if (newBalance < 0) {
+                System.out.println("Счет заблокирован.");
+                this.isUnblocked = false;
+            } else {
+                this.isUnblocked = true;
+            }
+            this.balance = newBalance;
+        } else {
+            System.out.println("Счет заблокирован, нельзя снять деньги.");
+        }
     }
 
     public int getNumber() {
@@ -43,30 +50,20 @@ public class Account {
         this.balance = balance;
     }
 
-    public boolean getStatus() {
-        return status;
+    public boolean getUnblocked() {
+        return isUnblocked;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
-
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
+    public void setUnblocked(boolean unblocked) {
+        this.isUnblocked = unblocked;
     }
 
     @Override
     public String toString() {
-        String statusAcc = status ? "заблокирован" : "разблокирован";
+        String statusAcc = isUnblocked ? "разблокирован" : "заблокирован";
         return "Счёт: " +
                 "номер #" + number +
                 ", сумма средств " + balance +
-                " у.е., состояние '" + statusAcc +
-                "', имя клиента " + client.getName() +
-                '.';
+                " у.е., состояние '" + statusAcc + '\'';
     }
 }

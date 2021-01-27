@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import static Task_04_Account.DatabaseClient.*;
+
 /*  Task 04
 4. Счета. Клиент может иметь несколько счетов в банке.
 Учитывать возможность блокировки/разблокировки счета.
@@ -13,39 +15,49 @@ import java.io.InputStreamReader;
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        Client client = new Client(2021, "Иванов Иван Иванович");
-        Account account_01 = new Account(2020202, -20000, client);
-        Account account_02 = new Account(1010101, 10000, client);
-        Account account_03 = new Account(3030303, 1000000, client);
-        Account account_04 = new Account(4040404, 10000, client);
-        client.setAccount(account_01, account_02, account_03, account_04);
-        System.out.println(client.toString());
+        Client client = new Client(2021, "Иванов Иван Иванович", accounts);
         int numAcc = readNumberAccount(reader);
-        client.searchAccount(numAcc);
+        int amountMoney = readAmountMoney(reader);
+        Account foundAccount = searchAccountByNumber(numAcc, client);
+        printFoundAccount(foundAccount);
+        withdrawMoneyAccount(foundAccount, amountMoney);
         System.out.println("Счета клиента '" + client.getName() + "' отсортированы по возрастанию номера:");
-        client.sortAccountNumber();
-        client.printAccount();
+        sortAccountsByNumber(client);
+        printAccount(client);
         System.out.println("Счета клиента '" + client.getName() + "' отсортированы по возрастанию баланса:");
-        client.sortAccountBalance();
-        client.printAccount();
-        System.out.println("Сумма на счетах: " + client.sumMoney() + " у.е.");
-        System.out.println("Сумма на счетах, имеющих положительный баланс: " + client.sumMoneyPositive() + " у.е.");
-        System.out.println("Сумма на счетах, имеющих отрицательный баланс: " + client.sumMoneyNegative() + " у.е.");
+        sortAccountsByBalance(client);
+        printAccount(client);
+        System.out.println("Сумма на счетах: " + sumMoney(client) + " у.е.");
+        System.out.println("Сумма на счетах, имеющих положительный баланс: " + sumMoneyPositive(client) + " у.е.");
+        System.out.println("Сумма на счетах, имеющих отрицательный баланс: " + sumMoneyNegative(client) + " у.е.");
+        System.out.println(client.toString());
     }
 
-    public static int readNumberAccount(BufferedReader reader) throws IOException {
+    private static int readNumberAccount(BufferedReader reader) throws IOException {
         int numAcc = 0;
-        boolean test = true;
-        while (test) {
-            try {
-                System.out.print("Введите номер счёта для поиска: #");
-                numAcc = Integer.parseInt(reader.readLine());
-                test = false;
-            } catch (NumberFormatException e) {
-                System.out.println("Ошибка! Номер счета введен некорректно: " + e);
-                test = true;
-            }
+        while (true) {
+            System.out.print("Введите номер счёта: #");
+            numAcc = Integer.parseInt(reader.readLine());
+            break;
         }
         return numAcc;
+    }
+
+    private static int readAmountMoney(BufferedReader reader) throws IOException {
+        System.out.print("Введите сумму денег для снятия со счета: ");
+        int amountMoney = Integer.parseInt(reader.readLine());
+        return amountMoney;
+    }
+
+    private static void printFoundAccount(Account account) {
+        if (account != null) {
+            System.out.println(account.toString());
+        }
+    }
+
+    private static void withdrawMoneyAccount(Account account, int amountMoney) {
+        if (account != null) {
+            account.withdraw(amountMoney);
+        }
     }
 }
