@@ -1,6 +1,6 @@
 package Task_03_Country;
 
-class Base {
+class Database {
     //Города
     //Брестская область
     static City brest = new City("Брест", 146.12, 340000, true, false);

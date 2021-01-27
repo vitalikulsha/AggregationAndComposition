@@ -1,6 +1,6 @@
 package Task_03_Country;
 
-import static Task_03_Country.Base.*;
+import static Task_03_Country.Database.*;
 
 /* Task 03
 3. Создать объект класса Государство, используя классы Область, Район, Город.
