@@ -1,10 +1,9 @@
 package Task_05_TouristPackage;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 
 /* Task 05
 5. Туристические путевки. Сформировать набор предложений клиенту по выбору туристической путевки
@@ -12,20 +11,17 @@ import java.util.Comparator;
   Учитывать возможность выбора транспорта, питания и числа дней. Реализовать выбор и сортировку путевок.
  */
 public class TouristPackageGenerator {
-    private TouristPackage[] touristPackage;
+    private TouristPackage[] touristPackages;
 
-    public TouristPackageGenerator() {
-    }
-
-    public TouristPackageGenerator(TouristPackage... touristPackage) {
-        this.touristPackage = touristPackage;
+    public TouristPackageGenerator(TouristPackage... touristPackages) {
+        this.touristPackages = touristPackages;
     }
 
     @Override
     public String toString() {
-        if (this.touristPackage != null) {
+        if (this.touristPackages != null) {
             StringBuilder tpSet = new StringBuilder();
-            for (TouristPackage tp : touristPackage) {
+            for (TouristPackage tp : touristPackages) {
                 tpSet.append(tp.toString() + ";\n");
             }
             return tpSet.toString();
@@ -35,133 +31,133 @@ public class TouristPackageGenerator {
     }
 
     //вывод в консоль списка путевок отсортированных по country
-    public void printSortCountry() {
-        sortCountry();
+    public void printSortedByCountry() {
+        sortedByCountry();
         System.out.println("Туристические путевки отсортированы по стране назначения:\n" + toString());
     }
 
     //вывод в консоль списка путевок отсортированных по locality
-    public void printSortLocality() {
-        sortLocality();
+    public void printSortedByLocality() {
+        sortedByLocality();
         System.out.println("Туристические путевки отсортированы по населенному пункту:\n" + toString());
     }
 
     //вывод в консоль списка путевок отсортированных по type
-    public void printSortType() {
-        sortType();
+    public void printSortedByType() {
+        sortedByType();
         System.out.println("Туристические путевки отсортированы по типу путевки:\n" + toString());
     }
 
     //вывод в консоль списка путевок отсортированных по transport
-    public void printSortTransport() {
-        sortTransport();
+    public void printSortedByTransport() {
+        sortedByTransport();
         System.out.println("Туристические путевки отсортированы по виду транспорта:\n" + toString());
     }
 
     //вывод в консоль списка путевок отсортированных по nutrition
-    public void printSortNutrition() {
-        sortNutrition();
+    public void printSortedByNutrition() {
+        sortedByNutrition();
         System.out.println("Туристические путевки отсортированы по виду питания:\n" + toString());
     }
 
     //вывод в консоль списка путевок отсортированных по nutrition
-    public void printSortNumberDays() {
-        sortNumberDays();
+    public void printSortedByNumberDays() {
+        sortedByNumberDays();
         System.out.println("Туристические путевки отсортированы по количеству дней:\n" + toString());
     }
 
     //Сортировка страна->пункт назначения->тип->транспорт->питание->количество дней
-    public TouristPackage[] sortCountry() {
-        Comparator<TouristPackage> tpComparator = new CountryComparator().thenComparing(new LocalityComparator().
-                thenComparing(new TypeComparator().thenComparing(new TransportComparator().
-                        thenComparing(new NutritionComparator().thenComparing(new NumberDaysComparator())))));
-        Arrays.sort(this.touristPackage, tpComparator);
-        return this.touristPackage;
+    public TouristPackage[] sortedByCountry() {
+        Comparator<TouristPackage> tpComparator = new CountryComparator().thenComparing(new LocalityComparator()
+                .thenComparing(new TypeComparator().thenComparing(new TransportComparator()
+                        .thenComparing(new NutritionComparator().thenComparing(new NumberDaysComparator())))));
+        Arrays.sort(this.touristPackages, tpComparator);
+        return this.touristPackages;
     }
 
     //Сортировка: пункт назначения->страна->тип->транспорт->питание->количество дней
-    public TouristPackage[] sortLocality() {
-        Comparator<TouristPackage> tpComparator = new LocalityComparator().thenComparing(new CountryComparator().
-                thenComparing(new TypeComparator().thenComparing(new TransportComparator().
-                        thenComparing(new NutritionComparator().thenComparing(new NumberDaysComparator())))));
-        Arrays.sort(this.touristPackage, tpComparator);
-        return this.touristPackage;
+    public TouristPackage[] sortedByLocality() {
+        Comparator<TouristPackage> tpComparator = new LocalityComparator().thenComparing(new CountryComparator()
+                .thenComparing(new TypeComparator().thenComparing(new TransportComparator()
+                        .thenComparing(new NutritionComparator().thenComparing(new NumberDaysComparator())))));
+        Arrays.sort(this.touristPackages, tpComparator);
+        return this.touristPackages;
     }
 
     //Сортировка: тип->страна->пункт назначения->транспорт->питание->количество дней
-    public TouristPackage[] sortType() {
-        Comparator<TouristPackage> tpComparator = new TypeComparator().thenComparing(new CountryComparator().
-                thenComparing(new LocalityComparator().thenComparing(new TransportComparator().
-                        thenComparing(new NutritionComparator().thenComparing(new NumberDaysComparator())))));
-        Arrays.sort(this.touristPackage, tpComparator);
-        return this.touristPackage;
+    public TouristPackage[] sortedByType() {
+        Comparator<TouristPackage> tpComparator = new TypeComparator().thenComparing(new CountryComparator()
+                .thenComparing(new LocalityComparator().thenComparing(new TransportComparator()
+                        .thenComparing(new NutritionComparator().thenComparing(new NumberDaysComparator())))));
+        Arrays.sort(this.touristPackages, tpComparator);
+        return this.touristPackages;
     }
 
     //Сортировка транспорт->страна->пункт назначения->тип->питание->количество дней
-    public TouristPackage[] sortTransport() {
-        Comparator<TouristPackage> tpComparator = new TransportComparator().thenComparing(new CountryComparator().
-                thenComparing(new LocalityComparator().thenComparing(new TypeComparator().
-                        thenComparing(new NutritionComparator().thenComparing(new NumberDaysComparator())))));
-        Arrays.sort(this.touristPackage, tpComparator);
-        return this.touristPackage;
+    public TouristPackage[] sortedByTransport() {
+        Comparator<TouristPackage> tpComparator = new TransportComparator().thenComparing(new CountryComparator()
+                .thenComparing(new LocalityComparator().thenComparing(new TypeComparator()
+                        .thenComparing(new NutritionComparator().thenComparing(new NumberDaysComparator())))));
+        Arrays.sort(this.touristPackages, tpComparator);
+        return this.touristPackages;
     }
 
     //Сортировка питание->страна->пункт назначения->тип->транспорт->количество дней
-    public TouristPackage[] sortNutrition() {
-        Comparator<TouristPackage> tpComparator = new NutritionComparator().thenComparing(new CountryComparator().
-                thenComparing(new LocalityComparator().thenComparing(new TypeComparator().
-                        thenComparing(new TransportComparator().thenComparing(new NumberDaysComparator())))));
-        Arrays.sort(this.touristPackage, tpComparator);
-        return this.touristPackage;
+    public TouristPackage[] sortedByNutrition() {
+        Comparator<TouristPackage> tpComparator = new NutritionComparator().thenComparing(new CountryComparator()
+                .thenComparing(new LocalityComparator().thenComparing(new TypeComparator()
+                        .thenComparing(new TransportComparator().thenComparing(new NumberDaysComparator())))));
+        Arrays.sort(this.touristPackages, tpComparator);
+        return this.touristPackages;
     }
 
     //Сортировка количество дней->страна->пункт назначения->тип->транспорт->питание
-    public TouristPackage[] sortNumberDays() {
-        Comparator<TouristPackage> tpComparator = new NumberDaysComparator().thenComparing(new CountryComparator().
-                thenComparing(new LocalityComparator().thenComparing(new TypeComparator().
-                        thenComparing(new TransportComparator().thenComparing(new NutritionComparator())))));
-        Arrays.sort(this.touristPackage, tpComparator);
-        return this.touristPackage;
+    public TouristPackage[] sortedByNumberDays() {
+        Comparator<TouristPackage> tpComparator = new NumberDaysComparator().thenComparing(new CountryComparator()
+                .thenComparing(new LocalityComparator().thenComparing(new TypeComparator()
+                        .thenComparing(new TransportComparator().thenComparing(new NutritionComparator())))));
+        Arrays.sort(this.touristPackages, tpComparator);
+        return this.touristPackages;
     }
 
     //Поиск и сортировка путевки по стране назначения
-    public void searchCountry(String country) {
-        sortCountry();
+    public void searchByCountry(String country) {
+        sortedByCountry();
         System.out.println("Список туристических путевок для страны назначения '" + country + "':");
-        boolean test = true;
-        for (TouristPackage tp : touristPackage) {
+        boolean search = true;
+        for (TouristPackage tp : touristPackages) {
             if (country.equalsIgnoreCase(tp.getCountry())) {
-                test = false;
+                search = false;
                 System.out.println(tp.toString());
             }
         }
-        if (test) {
+        if (search) {
             System.out.println("Туристические путевки в страну назначения '" + country + "' не найдены.");
         }
     }
 
     //Поиск и сортировка путевки по пункту назначения
-    public void searchLocality(String locality) {
-        sortLocality();
+    public void searchByLocality(String locality) {
+        sortedByLocality();
         System.out.println("Список туристических путевок для населенного пункта '" + locality + "':");
-        boolean test = true;
-        for (TouristPackage tp : touristPackage) {
+        boolean search = true;
+        for (TouristPackage tp : touristPackages) {
             if (locality.equalsIgnoreCase(tp.getLocality())) {
-                test = false;
+                search = false;
                 System.out.println(tp.toString());
             }
         }
-        if (test) {
+        if (search) {
             System.out.println("Туристические путевки в населенный пункт '" + locality + "' не найдены.");
         }
     }
 
     //Поиск и сортировка путевки по типу путевки
-    public ArrayList<TouristPackage> searchType(String type) {
-        sortType();
+    public List<TouristPackage> searchByType(String type) {
+        sortedByType();
         System.out.println("Список туристических путевок для типа '" + type + "':");
-        ArrayList<TouristPackage> listType = new ArrayList<>();
-        for (TouristPackage tp : touristPackage) {
+        List<TouristPackage> listType = new ArrayList<>();
+        for (TouristPackage tp : touristPackages) {
             if (type.equalsIgnoreCase(tp.getType())) {
                 listType.add(tp);
                 System.out.println(tp.toString());
@@ -174,11 +170,11 @@ public class TouristPackageGenerator {
     }
 
     //Поиск и сортировка путевки по виду транспорта
-    public ArrayList<TouristPackage> searchTransport(String transport) {
-        sortTransport();
+    public List<TouristPackage> searchByTransport(String transport) {
+        sortedByTransport();
         System.out.println("Список туристических путевок для вида транспорта '" + transport + "':");
-        ArrayList<TouristPackage> listTransport = new ArrayList<>();
-        for (TouristPackage tp : touristPackage) {
+        List<TouristPackage> listTransport = new ArrayList<>();
+        for (TouristPackage tp : touristPackages) {
             if (transport.equalsIgnoreCase(tp.getTransport())) {
                 System.out.println(tp.toString());
                 listTransport.add(tp);
@@ -191,11 +187,11 @@ public class TouristPackageGenerator {
     }
 
     //Поиск и сортировка путевки по наличию питания
-    public ArrayList<TouristPackage> searchNutrition(String nutrition) {
-        sortNutrition();
+    public List<TouristPackage> searchByNutrition(String nutrition) {
+        sortedByNutrition();
         System.out.println("Список туристических путевок по виду питания '" + nutrition + "':");
-        ArrayList<TouristPackage> listNutrition = new ArrayList<>();
-        for (TouristPackage tp : touristPackage) {
+        List<TouristPackage> listNutrition = new ArrayList<>();
+        for (TouristPackage tp : touristPackages) {
             if (nutrition.equalsIgnoreCase(tp.getNutrition())) {
                 System.out.println(tp.toString());
                 listNutrition.add(tp);
@@ -208,11 +204,11 @@ public class TouristPackageGenerator {
     }
 
     //Поиск и сортировка путевки по количеству дней
-    public void searchNumberDays(int numberDays) {
-        sortNumberDays();
+    public void searchByNumberDays(int numberDays) {
+        sortedByNumberDays();
         System.out.println("Список туристических путевок на '" + numberDays + "' дней отдыха:");
         boolean test = true;
-        for (TouristPackage tp : touristPackage) {
+        for (TouristPackage tp : touristPackages) {
             if (numberDays == tp.getNumberDays()) {
                 test = false;
                 System.out.println(tp.toString());
@@ -223,14 +219,12 @@ public class TouristPackageGenerator {
         }
     }
 
-    public ArrayList<TouristPackage> searchNumberDaysInterval(int[] numberDays) {
-        sortNumberDays();
+    public List<TouristPackage> searchByNumberDaysInterval(int[] numberDays) {
+        sortedByNumberDays();
         System.out.println("Список туристических путевок на [" + numberDays[0] + "-" + numberDays[1] + "] дней отдыха:");
-        //boolean test = true;
-        ArrayList<TouristPackage> listNumberDays = new ArrayList<>();
-        for (TouristPackage tp : touristPackage) {
+        List<TouristPackage> listNumberDays = new ArrayList<>();
+        for (TouristPackage tp : touristPackages) {
             if (tp.getNumberDays() >= numberDays[0] && tp.getNumberDays() <= numberDays[1]) {
-                //test = false;
                 System.out.println(tp.toString());
                 listNumberDays.add(tp);
             }
@@ -242,46 +236,49 @@ public class TouristPackageGenerator {
     }
 
     //Поиск путевки по типу, транспорту, наличию питания и количеству деней (интервал)
-    public void searchTypeTransportNutritionNumberDays(String type, String transport, String nutrition, int[] numberDays) {
-        sortCountry();
+    public List<TouristPackage> searchByTypeTransportNutritionNumberDays(String type, String transport, String nutrition, int[] numberDays) {
+        sortedByCountry();
         System.out.println("Список туристических путевок по следующим параметрам - тип '" + type + "', транспорт '" +
                 transport + "', питание '" + nutrition + "', количество дней [" + numberDays[0] + "-" + numberDays[1] + "]:");
-        boolean test = true;
-        for (TouristPackage tp : touristPackage) {
+        List<TouristPackage> list = new ArrayList<>();
+        for (TouristPackage tp : touristPackages) {
             if (type.equalsIgnoreCase(tp.getType()) && transport.equalsIgnoreCase(tp.getTransport()) &&
                     nutrition.equalsIgnoreCase(tp.getNutrition()) && tp.getNumberDays() >= numberDays[0]
                     && tp.getNumberDays() <= numberDays[1]) {
-                test = false;
+
                 System.out.println(tp.toString());
+                list.add(tp);
             }
         }
-        if (test) {
+        if (list.size() == 0) {
             System.out.println("Туристические путевки c заданными параметрами не найдены.");
         }
+        return list;
     }
 
     //Поиск по типу отдыха, транспорту
-    public void searTypeTransport(String type, String transport) {
-        sortCountry();
+    public List<TouristPackage> searchByTypeTransport(String type, String transport) {
+        sortedByCountry();
         System.out.println("Список туристических путевок по следующим параметрам - тип '" + type + "', транспорт '" +
                 transport + "':");
-        boolean test = true;
-        for (TouristPackage tp : touristPackage) {
+        List<TouristPackage> list = new ArrayList<>();
+        for (TouristPackage tp : touristPackages) {
             if (type.equalsIgnoreCase(tp.getType()) && transport.equalsIgnoreCase(tp.getTransport())) {
-                test = false;
                 System.out.println(tp.toString());
+                list.add(tp);
             }
         }
-        if (test) {
+        if (list.size() == 0) {
             System.out.println("Туристические путевки c заданными параметрами не найдены.");
         }
+        return list;
     }
 
-    public TouristPackage[] getTouristPackage() {
-        return touristPackage;
+    public TouristPackage[] getTouristPackages() {
+        return touristPackages;
     }
 
-    public void setTouristPackage(TouristPackage... touristPackage) {
-        this.touristPackage = touristPackage;
+    public void setTouristPackages(TouristPackage... touristPackages) {
+        this.touristPackages = touristPackages;
     }
 }

@@ -2,7 +2,6 @@ package Task_05_TouristPackage;
 
 import java.util.Comparator;
 
-//Сортировка: страна->пункт назначения->тип->транспорт->питание->количество дней
 class CountryComparator implements Comparator<TouristPackage> {
     @Override
     public int compare(TouristPackage tp1, TouristPackage tp2) {

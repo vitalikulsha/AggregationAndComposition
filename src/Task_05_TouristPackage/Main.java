@@ -3,7 +3,9 @@ package Task_05_TouristPackage;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
+import java.util.List;
+
+import static Task_05_TouristPackage.DatabaseTouristPackage.tpSet;
 
 /* Task 05
 5. Туристические путевки. Сформировать набор предложений клиенту по выбору туристической путевки
@@ -31,27 +33,34 @@ public class Main {
         System.out.print("Выберите способ сортировки туристических путевок: ");
         int num = testReadNumber(reader);
         switch (num) {
-            case (1):
-                tpGenerator.printSortCountry();
+            case (1): {
+                tpGenerator.printSortedByCountry();
                 break;
-            case (2):
-                tpGenerator.printSortLocality();
+            }
+            case (2): {
+                tpGenerator.printSortedByLocality();
                 break;
-            case (3):
-                tpGenerator.printSortType();
+            }
+            case (3): {
+                tpGenerator.printSortedByType();
                 break;
-            case (4):
-                tpGenerator.printSortTransport();
+            }
+            case (4): {
+                tpGenerator.printSortedByTransport();
                 break;
-            case (5):
-                tpGenerator.printSortNutrition();
+            }
+            case (5): {
+                tpGenerator.printSortedByNutrition();
                 break;
-            case (6):
-                tpGenerator.printSortNumberDays();
+            }
+            case (6): {
+                tpGenerator.printSortedByNumberDays();
                 break;
-            default:
+            }
+            default: {
                 System.out.println("Список туристических путевок не отсортирован:\n" + tpGenerator.toString());
                 break;
+            }
         }
     }
 
@@ -69,62 +78,71 @@ public class Main {
         System.out.print("Выберите вариант поиска туристической путевки: ");
         int num = testReadNumber(reader);
         switch (num) {
-            case (1):
+            case (1): {
                 System.out.println("Поиск по стране назначения:");
-                tpGenerator.searchCountry(readCountry(reader));
+                tpGenerator.searchByCountry(readCountry(reader));
                 break;
-            case (2):
+            }
+            case (2): {
                 System.out.println("Поиск по населенному пункту:");
-                tpGenerator.searchLocality(readLocality(reader));
+                tpGenerator.searchByLocality(readLocality(reader));
                 break;
-            case (3):
+            }
+            case (3): {
                 System.out.println("Поиск по типу путевки:");
-                tpGenerator.searchType(readType(reader));
+                tpGenerator.searchByType(readType(reader));
                 break;
-            case (4):
+            }
+            case (4): {
                 System.out.println("Поиск по виду транспорта:");
-                tpGenerator.searchTransport(readTransport(reader));
+                tpGenerator.searchByTransport(readTransport(reader));
                 break;
-            case (5):
+            }
+            case (5): {
                 System.out.println("Поиск по виду питания:");
-                tpGenerator.searchNutrition(readNutrition(reader));
+                tpGenerator.searchByNutrition(readNutrition(reader));
                 break;
-            case (6):
+            }
+            case (6): {
                 System.out.println("Поиск по количеству дней:");
-                tpGenerator.searchNumberDays(readNumberDays(reader));
+                tpGenerator.searchByNumberDays(readNumberDays(reader));
                 break;
-            case (7):
+            }
+            case (7): {
                 System.out.println("Поиск по типу путевки и виду транспорта:");
-                tpGenerator.searTypeTransport(readType(reader), readTransport(reader));
+                tpGenerator.searchByTypeTransport(readType(reader), readTransport(reader));
                 break;
-            case (8):
+            }
+            case (8): {
                 System.out.println("Поиск по типу путевки, виду транспорта, виду питания, количеству дней:");
-                tpGenerator.searchTypeTransportNutritionNumberDays(readType(reader), readTransport(reader),
+                tpGenerator.searchByTypeTransportNutritionNumberDays(readType(reader), readTransport(reader),
                         readNutrition(reader), readIntervalNumberDays(reader));
                 break;
-            default:
+            }
+            default: {
                 System.out.println("Динамический поиск:");
                 dynamicSearch(tpGenerator, reader);
                 break;
+            }
         }
     }
 
     //Динамический поиск путевок по порядку: отдых -> трансорт -> питание -> количестов дней (интервал) с выводом на экран
     //Сортировка по стране назначения (country)
     public static void dynamicSearch(TouristPackageGenerator tpGenerator, BufferedReader reader) throws IOException {
-        ArrayList<TouristPackage> listType = tpGenerator.searchType(readType(reader));
+        List<TouristPackage> listType = tpGenerator.searchByType(readType(reader));
         if (listType.size() != 0) {
             TouristPackage[] tpTypeList = (TouristPackage[]) listType.toArray(new TouristPackage[0]);
             TouristPackageGenerator tpType = new TouristPackageGenerator(tpTypeList);
-            ArrayList<TouristPackage> listTransport = tpType.searchTransport(readTransport(reader));
+            List<TouristPackage> listTransport = tpType.searchByTransport(readTransport(reader));
             if (listTransport.size() != 0) {
                 TouristPackage[] tpTransportList = (TouristPackage[]) listTransport.toArray(new TouristPackage[0]);
                 TouristPackageGenerator tpTransport = new TouristPackageGenerator(tpTransportList);
-                ArrayList<TouristPackage> listNutrition = tpTransport.searchNutrition(readNutrition(reader));
+                List<TouristPackage> listNutrition = tpTransport.searchByNutrition(readNutrition(reader));
                 if (listNutrition.size() != 0) {
                     TouristPackage[] tpNumberDaysList = (TouristPackage[]) listNutrition.toArray(new TouristPackage[0]);
                     TouristPackageGenerator tpNumberDays = new TouristPackageGenerator(tpNumberDaysList);
-                    ArrayList<TouristPackage> listNumbersDays = tpNumberDays.searchNumberDaysInterval(readIntervalNumberDays(reader));
+                    List<TouristPackage> listNumbersDays = tpNumberDays.searchByNumberDaysInterval(readIntervalNumberDays(reader));
                 }
             }
         }
@@ -251,30 +269,4 @@ public class Main {
         }
         return num;
     }
-
-    //список туристических путевок
-    private static TouristPackage tp_00 = new TouristPackage("Украина", "Львов", "экскурсия", "автобус", "без питания", 3);
-    private static TouristPackage tp_01 = new TouristPackage("Украина", "Львов", "экскурсия", "автобус", "завтрак", 5);
-    private static TouristPackage tp_02 = new TouristPackage("Украина", "Хмельницкий", "шопинг", "автобус", "без питания", 3);
-    private static TouristPackage tp_03 = new TouristPackage("Украина", "Чернигов", "шопинг", "автобус", "без питания", 2);
-    private static TouristPackage tp_04 = new TouristPackage("Украина", "Буковель", "отдых", "самолет", "все включено", 11);
-    private static TouristPackage tp_05 = new TouristPackage("Беларусь", "Нарочь", "лечение", "автобус", "трехразовое", 14);
-    private static TouristPackage tp_06 = new TouristPackage("Беларусь", "Гродненская обл.", "экскурсия", "автобус", "без питания", 1);
-    private static TouristPackage tp_07 = new TouristPackage("Беларусь", "Витебск", "экскурсия", "поезд", "завтрак", 3);
-    private static TouristPackage tp_08 = new TouristPackage("Польша", "Белосток", "шопинг", "автобус", "без питания", 2);
-    private static TouristPackage tp_09 = new TouristPackage("Литва", "Вильнюс", "экскурсия", "поезд", "двухразовое", 4);
-    private static TouristPackage tp_10 = new TouristPackage("Латвия", "Рига", "отдых", "автобус", "трехразовое", 9);
-    private static TouristPackage tp_11 = new TouristPackage("Латвия", "Юрмала", "отдых", "поезд", "завтрак", 7);
-    private static TouristPackage tp_12 = new TouristPackage("Турция", "Аланья", "отдых", "самолет", "все включено", 11);
-    private static TouristPackage tp_13 = new TouristPackage("Турция", "Аланья", "отдых", "самолет", "все включено", 14);
-    private static TouristPackage tp_14 = new TouristPackage("Турция", "Аланья", "отдых", "самолет", "все включено", 5);
-    private static TouristPackage tp_15 = new TouristPackage("Турция", "Анталия", "отдых", "самолет", "все включено", 11);
-    private static TouristPackage tp_16 = new TouristPackage("Турция", "Анталия", "отдых", "самолет", "завтрак", 5);
-    private static TouristPackage tp_17 = new TouristPackage("Италия", "Неаполь", "круиз", "самолет", "трехразовое", 7);
-    private static TouristPackage tp_18 = new TouristPackage("Италия", "Генуя", "круиз", "самолет", "трехразовое", 5);
-    private static TouristPackage tp_19 = new TouristPackage("Испания", "Барселона", "экскурсия", "самолет", "завтрак", 4);
-    private static TouristPackage tp_20 = new TouristPackage("Северная Корея", "Пхеньян", "экскурсия", "поезд", "трехразовое", 5);
-    private static TouristPackage[] tpSet = new TouristPackage[]{tp_00, tp_01, tp_02, tp_03, tp_04, tp_05, tp_06, tp_07,
-            tp_08, tp_09, tp_10, tp_11, tp_12, tp_13, tp_14, tp_15, tp_16, tp_17, tp_18, tp_19, tp_20};
-
 }
